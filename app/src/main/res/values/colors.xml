@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ed8992</color>
+    <color name="colorPrimaryDark">#ed8992</color>
+    <color name="colorAccent">#9046E7</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBackgroundGrey">#f5f5f5</color>
+    <color name="colorGreyishBrown">#5a5a5a</color>
+    <color name="colorTextSecondary">#c4c4c4</color>
+    <color name="colorPrimaryAlpha">#efa5ab</color>
+    <color name="colorBottomBarAddICOn">#F0B23F</color>
+    <color name="colorTransparent"></color>
+
+    <color name="colorFieldStroke">#dedede</color>
+    <color name="colorHintText">#d6d6d6</color>
+    <color name="colorBorder">#e3e3e3</color>
+    <color name="colorSettingsDetails">#a1a1a1</color>
+    <color name="colorBlue">#1A8FFA</color>
+    <color name="colorRed">#ca000f</color>
+    <color name="background">#dddddd</color>
+
+</resources>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginRegistration.LoginActivity">
+        <ImageView
+            android:id="@+id/shop_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="116dp"
+            android:layout_marginEnd="130dp"
+            android:background="@drawable/ic_login_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/mob_no"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_hgt"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginTop="@dimen/edit_hgt"
+            android:layout_marginRight="@dimen/app_margin"
+            android:background="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_mobile_icon"
+            android:ems="10"
+            android:fontFamily="@font/gilroy_semibold"
+            android:gravity="center"
+            android:hint="@string/enter_mobile_no"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:padding="@dimen/margin"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="@dimen/textsize"
+            app:layout_constraintTop_toBottomOf="@+id/shop_icon" />
+
+        <EditText
+            android:id="@+id/salary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_hgt"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginTop="@dimen/edit_hgt"
+            android:layout_marginRight="@dimen/app_margin"
+            android:background="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_salary"
+            android:ems="10"
+            android:fontFamily="@font/gilroy_semibold"
+            android:gravity="center"
+            android:hint="@string/enter_salary"
+            android:inputType="number"
+            android:maxLength="10"
+            android:padding="@dimen/margin"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="@dimen/textsize"
+            app:layout_constraintTop_toBottomOf="@+id/mob_no" />
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="@dimen/app_margin"
+            android:layout_marginBottom="@dimen/app_margin"
+            android:background="@color/colorTextSecondary"
+            app:layout_constraintTop_toBottomOf="@+id/mob_no"/>
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="@dimen/app_margin"
+            android:layout_marginBottom="@dimen/app_margin"
+            android:background="@color/colorTextSecondary"
+            app:layout_constraintTop_toBottomOf="@+id/salary"/>
+        <TextView
+            android:id="@+id/trusted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_margin"
+            android:fontFamily="@font/gilroy_semibold"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/txt_splash"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            android:layout_marginTop="64dp"
+            app:layout_constraintTop_toBottomOf="@+id/salary"/>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/splash_btn_height"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/large_margin"
+            android:fontFamily="@font/gilroy_semibold"
+            android:gravity="center"
+            android:padding="@dimen/margin"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/app_bar_overView"
+        android:icon="@drawable/ic_format_list_pink"
+        android:title="@string/action_overView"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/app_bar_goals"
+        android:icon="@drawable/ic_budget_pink"
+        android:title="@string/action_budget"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/app_bar_profile"
+        android:icon="@drawable/ic_profile_pink"
+        android:title="@string/action_profile"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/app_bar_tools"
+        android:icon="@drawable/ic_tools_pink"
+        android:title="@string/action_tools"
+        app:showAsAction="always"/>
+
+
+
+</menu>

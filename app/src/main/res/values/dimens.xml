@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="placeholderImage">60dp</dimen>
+    <dimen name="placeholderTextHeight">8dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="textsize">14sp</dimen>
+    <dimen name="textsize_ten">10sp</dimen>
+    <dimen name="go_margin">30dp</dimen>
+    <dimen name="large_margin">20dp</dimen>
+    <dimen name="app_margin">16dp</dimen>
+    <dimen name="margin">10dp</dimen>
+    <dimen name="small_margin">5dp</dimen>
+    <dimen name="txt_splash">12sp</dimen>
+    <dimen name="splash_btn_height">55dp</dimen>
+    <dimen name="cust_item_height">70dp</dimen>
+    <dimen name="create_busins">180dp</dimen>
+    <dimen name="edit_height">60dp</dimen>
+    <dimen name="edit_hgt">50dp</dimen>
+    <dimen name="arrow_dimen">40dp</dimen>
+    <dimen name="price_txt_size">18sp</dimen>
+    <dimen name="arrow_dim">15dp</dimen>
+    <dimen name="dukaan_image">55dp</dimen>
+    <dimen name="dukaan_width">105dp</dimen>
+    <dimen name="dukaan_height">97dp</dimen>
+    <dimen name="cust_textsize">16sp</dimen>
+    <dimen name="cont_img">35dp</dimen>
+    <dimen name="view_margin">67dp</dimen>
+    <dimen name="manage_khata">26sp</dimen>
+    <dimen name="money_text_size">24sp</dimen>
+</resources>

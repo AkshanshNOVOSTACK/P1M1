@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">KwkPay</string>
+    <string name="mainScreen_appbar1_overView">OVERVIEW</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="intent_message">intent_message</string>
+    <string name="action_overView">Overview</string>
+    <string name="action_budget">Goals</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_tools">Tools</string>
+
+    <!-- new String-->
+    <string name="reg_appbarHeader">Fill the details below</string>
+    <string name="reg_basicProfile_name_hint">Name as per PAN Card</string>
+    <string name="editProfile_hint_first_name">Full Name</string>
+    <string name="reg_basicProfile_dob_hint">Date of Birth</string>
+    <string name="editProfile_hint_dob">DD/MM/YYYY</string>
+    <string name="reg_basicProfile_gender_hint">Gender</string>
+    <string name="reg_basicProfile_city_hint">City</string>
+    <string name="editProfile_hint_city_name">Ex: New Delhi</string>
+    <string name="reg_basicProfile_mobile_hint">Mobile Number</string>
+    <string name="editProfile_hint_mobile">9999887777</string>
+    <string name="upload_image_note">While clicking selfie make sure you have a proper lights surround you</string>
+    <string name="reg_basicProfile_residenceType_hint">Residence Type</string>
+    <string name="reg_basicProfile_pan_hint">PAN Number</string>
+    <string name="editProfile_hint_pan_name">Ex: ADTYU9PLI</string>
+    <string name="reg_basicProfile_employmentType_hint">Employment Type</string>
+    <string name="reg_basicProfile_salary_hint">Salary(In hand)</string>
+    <string name="editProfile_hint_salary">10,000</string>
+    <string name="reg_basicProfile_receive_salary_hint">How do you receive your salary</string>
+    <string name="reg_basicProfile_bank_account_hint">Bank Account</string>
+    <string name="reg_company_name_hint">Employer Name</string>
+    <string name="editProfile_hint_company_name">Employer Name</string>
+    <string name="reg_basicProfile_companyType_hint">Company Type</string>
+    <string name="reg_company_designation_hint">Designation</string>
+    <string name="editProfile_hint_designation">Designation</string>
+    <string name="reg_company_office_email_hint">Office Email</string>
+    <string name="link_wallets_appbarHeader">Link Payment Options</string>
+    <string name="link_wallets_walletsBlock_paytm">Paytm</string>
+    <string name="link_wallets_walletsBlock_paytm_desc">Click to link your Paytm Wallet</string>
+    <string name="link_wallets_walletsBlock_mobikwik">Mobikwik</string>
+    <string name="link_wallets_walletsBlock_mobikwik_desc">Click to link your mobikwik Wallet</string>
+    <string name="link_wallets_walletsBlock_freecharge">Freecharge</string>
+    <string name="link_wallets_walletsBlock_freecharge_desc">Click to link your Freecharge Wallet</string>
+    <string name="link_ccdcBlock_cc">Credit Card</string>
+    <string name="link_ccdcBlock_cc_desc">Click to link you credit card</string>
+    <string name="link_ccdcBlock_dc">Debit Card</string>
+    <string name="link_wallets_2_appbarHeader">Link your Paytm Wallet</string>
+    <string name="link_wallets_frag_paytm">Enter the number linked to your Paytm Wallet</string>
+    <string name="link_wallets_notice">We will deduct ₹1.00 from your wallet to confirm that its you.</string>
+    <string name="set_your_goals_appbarHeader">Select your Goals</string>
+    <string name="electronics_brand_hint">Brand</string>
+    <string name="editProfile_hint_brand">Select the Brand</string>
+    <string name="electronics_type_hint">Type</string>
+    <string name="editProfile_hint_type">Select the type of appliance</string>
+    <string name="electronics_range_hint">Price Range</string>
+
+
+    <string name="electronics_timePeriod_hint">Time period you would want to buy this in (considering from today)</string>
+    <string name="electronics_saving_hint">How much would you like to save</string>
+    <string name="electronics_destination_hint">Destination</string>
+    <string name="holidays_destination_hint">Destination</string>
+    <string name="holidays_numberOfFamilyMembers_hint">No. of Dependents/ family/ friends included in your budget</string>
+    <string name="automobile_type_hint">Type of Vehical</string>
+    <string name="personalSavings_category_hint">Category</string>
+    <string name="registration_pregressBar_header_start">Quick Details</string>
+    <string name="registration_pregressBar_header_middle">Employment Details</string>
+    <string name="registration_pregressBar_header_end">Verification</string>
+    <string name="verification_appbarHeader">Verification</string>
+    <string name="link_ccdc_2_appbarHeader">Link Your Credit/Debit Card</string>
+    <string name="link_ccdc_warning">Please fill the details Carefully</string>
+    <string name="link_ccdc_cardHolder_name_hint">Name on card</string>
+    <string name="link_ccdc_cardHolder_name2_hint">Enter Card Holder\'s Name</string>
+    <string name="link_ccdc_card_number_hint">Card Number</string>
+    <string name="link_ccdc_card_number2_hint">Enter Card Number</string>
+    <string name="link_ccdc_card_month_hint">Month</string>
+    <string name="link_ccdc_ex_month_hint">Month</string>
+    <string name="link_ccdc_ex_year_hint">Year</string>
+    <string name="link_ccdc_card_cvv_hint">Security Code/CVV/CVC</string>
+    <string name="link_ccdc_card_cvv_hint2">Enter Security Code Ex: 123</string>
+    <string name="appbar_title_settings">Profile Settings</string>
+    <string name="settings_editProfile">Edit Profile</string>
+    <string name="settings_user_name">Akshansh Gusain</string>
+    <string name="settings_user_email">akshansh.gusain@novostack.com</string>
+    <string name="settings_phone">99999999999</string>
+    <string name="settings_settingsBlock_safety">Safety</string>
+
+    <string name="settings_settingsBlock_safety_desc">Control your safety settings, including Ride Check notifications</string>
+    <string name="settings_settingsBlock_privacySettings_desc">Manage the data you share with us</string>
+    <string name="settings_settingsBlock_privacySettings">Privacy Settings</string>
+    <string name="settings_settingsBlock_security">Security</string>
+    <string name="settings_settingsBlock_secutiry_desc">Control your account security with 2-step verification</string>
+    <string name="settings_signout">Sign Out</string>
+    <string name="appbar_title_edit_profile">Edit Profile</string>
+    <string name="editProfile_last_name">Last Name</string>
+    <string name="editProfile_first_name">First Name</string>
+    <string name="editProfile_phone_number">Phone Number</string>
+    <string name="editProfile_hint_mobileNumber">9998887777</string>
+    <string name="editProfile_email">Email</string>
+    <string name="editProfile_hint_email">akshansh.gusain@novostack.com</string>
+    <string name="appbar_title_tools">Tools</string>
+    <string name="enter_mobile_no">Enter Mobile Numer</string>
+    <string name="Login">Login</string>
+    <string name="enter_salary">Enter your Monthly salary</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="settings_settingsBlock_service">Background Tasks</string>
+    <string name="settings_settingsBlock_service_desc">Control what the app can read in background</string>
+    <string name="appbar_title_background_service">Background Tasks</string>
+
+</resources>
