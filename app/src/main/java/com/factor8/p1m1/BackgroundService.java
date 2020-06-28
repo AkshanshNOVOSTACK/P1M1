@@ -19,6 +19,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.Observer;
 
 
 import com.android.volley.AuthFailureError;
@@ -28,16 +29,24 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.factor8.p1m1.Model.Entity;
+import com.factor8.p1m1.Model.EntitySavings;
 import com.factor8.p1m1.Network.VolleyMultipartRequest;
 import com.factor8.p1m1.Network.VolleySingleton;
+import com.factor8.p1m1.UtilitiesClasses.Utils;
 import com.factor8.p1m1.View.MainActivity;
 import com.factor8.p1m1.ViewModel.ViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -49,9 +58,9 @@ public class BackgroundService extends Service {
     private ViewModel viewModel;
     private String TAG = "BGTagab";
     public static final int FOREGROUND_SERVICE_ID = 204;
-
     private int backgroundServiceRunCount;
     private  List<String> mBankSender;
+
 
     @Nullable
     @Override
@@ -84,6 +93,7 @@ public class BackgroundService extends Service {
         } catch (Exception e) {
             Log.d(TAG, "Error in UnRegistering The recievers..");
         }
+
     }
 
     private void registerReceiverBroadcastReceiver() {
@@ -133,21 +143,25 @@ public class BackgroundService extends Service {
     //------------------------------------------------------  Network Call --------------------------------------------------------------------------
 
     public void networkCall() {
-        VolleyMultipartRequest request = new VolleyMultipartRequest(Request.Method.POST, "https://dass.io/kwkPay/api/endpoint.php", new Response.Listener<NetworkResponse>() {
+        VolleyMultipartRequest request = new VolleyMultipartRequest(Request.Method.POST, "http://dass.io/kwkpay/inward.php", new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 String responseString = new String(response.data);
                 try {
-                    JSONObject obj = new JSONObject(responseString);
-                    Log.d(TAG, "onResponse: JSONObject resqest_successful" + obj.getString("request_successful"));
-                    Log.d(TAG, "onResponse: JSONObject error" + obj.getString("error"));
-                    Log.d(TAG, "onResponse: JSONObject message" + obj.getString("message"));
-                    Log.d(TAG, "onResponse: JSONObject amount" + obj.getString("amount"));
-                    Log.d(TAG, "onResponse: JSONObject account" + obj.getString("acc_no"));
-                    accountNumber = obj.getString("acc_no");
-                    amount = obj.getString("amount");
-                    if(obj.getString("request_successful").equals("1")){
-                        makeDatabaseEntry(obj.getString("amount"));
+                    JSONArray arr = new JSONArray(responseString);
+                    JSONObject obj =  arr.getJSONObject(0);
+//                    Log.d(TAG, "onResponse: JSONObject resqest_successful" + obj.getString("request_successful"));
+//                    Log.d(TAG, "onResponse: JSONObject error" + obj.getString("error"));
+//                    Log.d(TAG, "onResponse: JSONObject message" + obj.getString("message"));
+//                    Log.d(TAG, "onResponse: JSONObject amount" + obj.getString("amount"));
+//                    Log.d(TAG, "onResponse: JSONObject account" + obj.getString("acc_no"));
+                    Log.d(TAG, "onResponse: JSONObject accountNumber " + obj.getString("accountNumber"));
+                    Log.d(TAG, "onResponse: JSONObject typeOfTransaction" + obj.getString("typeOfTransaction"));
+                    Log.d(TAG, "onResponse: JSONObject transactionAmount" + obj.getString("transactionAmount"));
+                    accountNumber = obj.getString("accountNumber");
+                    amount = obj.getString("transactionAmount");
+                    if(!obj.getString("typeOfTransaction") .equals("credited")){
+                        makeDatabaseEntry(obj.getString("transactionAmount"));
                     }
                 } catch (Exception e) {
                     Log.d(TAG, "onResponse EXCEPTION: " + e.getMessage());
@@ -162,7 +176,7 @@ public class BackgroundService extends Service {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("method", "filterSMS");
+               // map.put("method", "filterSMS");
                 map.put("data", mMessageBody);
                 return map;
             }
@@ -188,21 +202,32 @@ public class BackgroundService extends Service {
     }
 
     private void makeDatabaseEntry(String amount) {
-//        Random rand = new Random();
-//        int randomNum = new Random().nextInt((6 - 1) + 1) + 1;
-        viewModel.insert(new Entity(mSender, Double.valueOf(amount), Entity.CATE_UNCATEGORISED, null != accountNumber ? accountNumber : "0", mTimeStamp, mMessageBody));
-        backgroundServiceRunCount = backgroundServiceRunCount+1;
-        createNotification();
+//        String localAmount = "0";
+//        String local_account_number = "";
+//        if(amount.equals("")){
+//            localAmount  = "0";
+//        }else{
+//            localAmount = amount;
+//        }
+//        if(accountNumber.equals("")){
+//            local_account_number = "Acc. No. not available";
+//        }else{
+//            local_account_number = accountNumber;
+//        }
+        try{
+            viewModel.insert(new Entity(mSender, Double.parseDouble((amount).replaceAll(",", "")), Entity.CATE_UNCATEGORISED, accountNumber, mTimeStamp, mMessageBody));
+            backgroundServiceRunCount = backgroundServiceRunCount+1;
+            createNotification();
+        }catch(Exception e){
+            Log.d(TAG, "makeDatabaseEntry: "+ e.getLocalizedMessage());
+        }
+
     }
 
+
     private void createNotification(){
-
-
-
-
         Notification notification = null;
         if(backgroundServiceRunCount == 0){
-
             Intent notificationIntent = new Intent(this, MainActivity.class);
             //notificationIntent.putExtra("CalledFromService", DIALOG_TYPE_DETAILS);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -227,7 +252,7 @@ public class BackgroundService extends Service {
                         .setLargeIcon(drawableToBitmap(getDrawable(R.drawable.ic_category_entertainment)))
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(mMessageBody)
-                                .setBigContentTitle("You just spent ₹ "+amount +" From: Acc"+accountNumber)
+                                .setBigContentTitle("You just spent ₹ "+Double.parseDouble((amount).replaceAll(",", "")) +" From: Acc"+accountNumber)
                                 .setSummaryText(mSender))
                         .setContentIntent(pendingIntent)
                         .build();
@@ -290,7 +315,30 @@ public class BackgroundService extends Service {
         temp.add("AX-KOTAKB");
         temp.add("9654829994");
         temp.add("9910247478");
-        temp.add("7827041909");
+        temp.add("9620921237");
+        temp.add("ICICIM");
+        temp.add("ICICIB");
+        temp.add("ANDBNK");
+        temp.add("SBIUPI");
+        temp.add("SBIPSG");
+        temp.add("CBSSBI");
+        temp.add("KOTAKB");
+        temp.add("DBSBNK");
+        temp.add("SBIINB");
+        temp.add("SBIDGT");
+        temp.add("ATMSBI");
+        temp.add("AXISBK");
+        temp.add("BOBTXN");
+        temp.add("OBCBNK");
+        temp.add("SYNBNK");
+        temp.add("INDUSB");
+        temp.add("ALBNK");
+        temp.add("UNIONB");
+        temp.add("IDBIK");
+        temp.add("HDFCBK");
+        temp.add("PNBSMS");
+      //  temp.add("9910247478");
+     //   temp.add("7827041909");
         mBankSender = temp;
     }
 }

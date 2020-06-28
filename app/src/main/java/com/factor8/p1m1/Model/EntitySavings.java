@@ -11,11 +11,11 @@ public class EntitySavings {
     double dailyLimit, cth, deduction, totalExpense;
 
     public EntitySavings(long timeStamp, double dailyLimit, double cth, double deduction, double totalExpense) {
-        this.timeStamp = timeStamp;
-        this.dailyLimit = dailyLimit;
-        this.cth = cth;
-        this.deduction = deduction;
-        this.totalExpense = totalExpense;
+        this.timeStamp = timeStamp; //timeStamp of the transaction
+        this.dailyLimit = dailyLimit; // Daily limit of the day
+        this.cth = cth; // NULL
+        this.deduction = deduction;  // Which ever is minimum ( Daily limit OR Sum of Induced Saving)
+        this.totalExpense = totalExpense; // --------- Sum of Induced Savings
     }
 
     public int getId() {

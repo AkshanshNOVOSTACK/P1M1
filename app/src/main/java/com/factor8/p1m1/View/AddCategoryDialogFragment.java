@@ -23,16 +23,19 @@ import com.factor8.p1m1.ViewModel.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static com.factor8.p1m1.Model.Entity.CATE_PRIVATE;
 
 public class AddCategoryDialogFragment extends DialogFragment implements AddCategoryAdapter.OnSubItemClick {
-    ViewModel viewModel;
-    List<Entity> movieList = new ArrayList<>();
+    private ViewModel viewModel;
+    private List<Entity> movieList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_select_category, container, false);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(Objects.requireNonNull(getDialog()).getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final AddCategoryAdapter adapter = new AddCategoryAdapter(movieList, getActivity(), this);
 
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
@@ -47,7 +50,7 @@ public class AddCategoryDialogFragment extends DialogFragment implements AddCate
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_dialogFragment);
-        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(true);
+        ((SimpleItemAnimator) Objects.requireNonNull(recyclerView.getItemAnimator())).setSupportsChangeAnimations(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -58,11 +61,13 @@ public class AddCategoryDialogFragment extends DialogFragment implements AddCate
 
     @Override
     public void OnSubItemClick(int position, int id) {
-        int id2 = id+1;
-        Toast.makeText(getActivity(), "categoty: "+position+" at entery: "+id2 , Toast.LENGTH_SHORT).show();
-        Entity tempUpdated = movieList.get(id);
-        tempUpdated.setCategory(position);
-        tempUpdated.setCth(tempUpdated.getAmount());//CTH needed to be manually updated here. Because UPDATE QUERY was not updating cth field.
+    //    int id2 = id+1;
+        //Toast.makeText(getActivity(), "categoty: "+position+" at entery: "+id2 , Toast.LENGTH_SHORT).show();
+        Entity tempUpdated = movieList.get(position);
+        tempUpdated.setCategory(id);
+
+            tempUpdated.setCth(tempUpdated.getAmount());//CTH needed to be manually updated here. Because UPDATE QUERY was not updating cth field.
+
         viewModel.updateEntity(tempUpdated);
     }
 }

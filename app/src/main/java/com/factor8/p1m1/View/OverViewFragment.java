@@ -68,7 +68,7 @@ public class OverViewFragment extends Fragment implements View.OnClickListener {
         mExpense = view.findViewById(R.id.textView_expense);
         mBalance = view.findViewById(R.id.textView_balance);
         mIncome  =  view.findViewById(R.id.textView_income);
-        incomeString = pref.getString(PREF_KEY_SALARY,"0");
+        incomeString = pref.getString(PREF_KEY_SALARY,"200000");
         mIncome.setText("₹ "+ Utils.currencyFormatter(Double.parseDouble(incomeString)));
 
 
@@ -91,6 +91,8 @@ public class OverViewFragment extends Fragment implements View.OnClickListener {
                     } else {
                         mBalance.setText("₹ " + Utils.currencyFormatter(balance));
                     }
+                }else{
+                    mBalance.setText("₹ " + Utils.currencyFormatter(Double.parseDouble(incomeString)));
                 }
 
             }

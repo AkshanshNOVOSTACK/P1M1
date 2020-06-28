@@ -22,6 +22,7 @@ import static com.factor8.p1m1.Model.Entity.CATE_ENTERTAINMENT;
 import static com.factor8.p1m1.Model.Entity.CATE_GROCERY;
 import static com.factor8.p1m1.Model.Entity.CATE_INSTALLMENTS;
 import static com.factor8.p1m1.Model.Entity.CATE_MEDICAL;
+import static com.factor8.p1m1.Model.Entity.CATE_PRIVATE;
 import static com.factor8.p1m1.Model.Entity.CATE_TRAVEL;
 import static com.factor8.p1m1.Model.Entity.CATE_UTILS;
 
@@ -30,11 +31,13 @@ public class AddCategoryAdapter extends RecyclerView.Adapter<AddCategoryAdapter.
     private List<Entity> list;
     private Context mContext;
     OnSubItemClick onSubItemClick;
+    private int counter;
 
     public AddCategoryAdapter(List<Entity> list, Context mContext, OnSubItemClick onSubItemClick) {
         this.list = list;
         this.mContext = mContext;
         this.onSubItemClick = onSubItemClick;
+        counter = 0;
     }
 
     public void updateCurrentList(List<Entity> list) {
@@ -82,7 +85,7 @@ public class AddCategoryAdapter extends RecyclerView.Adapter<AddCategoryAdapter.
 
         private ConstraintLayout view1, view2, view3, view4, view5, view6;
         private LinearLayout subItem;
-
+        private TextView makePrivate;
         OnSubItemClick onSubItemClick;
 
         public RecViewHolder(View itemView, OnSubItemClick onSubItemClick) {
@@ -98,17 +101,21 @@ public class AddCategoryAdapter extends RecyclerView.Adapter<AddCategoryAdapter.
             view4 = itemView.findViewById(R.id.constraintLayout_cate_4);
             view5 = itemView.findViewById(R.id.constraintLayout_cate_5);
             view6 = itemView.findViewById(R.id.constraintLayout_cate_6);
-
+           makePrivate = itemView.findViewById(R.id.textView_make_private);
             subItem = itemView.findViewById(R.id.constraintLayout_subLayout);
         }
 
 
         private void bind(Entity movie) {
             boolean expanded = movie.isExpanded();
+          if(getAdapterPosition()==0 && (counter == 0 )){
+              subItem.setVisibility(View.VISIBLE);
+              counter++;
+          }else{
+              subItem.setVisibility(expanded ? View.VISIBLE : View.GONE);
+          }
 
-            subItem.setVisibility(expanded ? View.VISIBLE : View.GONE);
-
-            mSenderTextView.setText(movie.getSender());
+          mSenderTextView.setText(movie.getSender());
 
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh.mm aa");
@@ -122,29 +129,32 @@ public class AddCategoryAdapter extends RecyclerView.Adapter<AddCategoryAdapter.
             view4.setOnClickListener(this);
             view5.setOnClickListener(this);
             view6.setOnClickListener(this);
-
+            makePrivate.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.constraintLayout_cate_1:
-                    onSubItemClick.OnSubItemClick(CATE_MEDICAL, getAdapterPosition());
+                    onSubItemClick.OnSubItemClick(getAdapterPosition(),CATE_MEDICAL);
                     break;
                 case R.id.constraintLayout_cate_2:
-                    onSubItemClick.OnSubItemClick(CATE_ENTERTAINMENT, getAdapterPosition());
+                    onSubItemClick.OnSubItemClick(getAdapterPosition(), CATE_ENTERTAINMENT);
                     break;
                 case R.id.constraintLayout_cate_3:
-                    onSubItemClick.OnSubItemClick(CATE_INSTALLMENTS, getAdapterPosition());
+                    onSubItemClick.OnSubItemClick(getAdapterPosition(), CATE_INSTALLMENTS);
                     break;
                 case R.id.constraintLayout_cate_4:
-                    onSubItemClick.OnSubItemClick(CATE_GROCERY, getAdapterPosition());
+                    onSubItemClick.OnSubItemClick(getAdapterPosition(), CATE_GROCERY);
                     break;
                 case R.id.constraintLayout_cate_5:
-                    onSubItemClick.OnSubItemClick(CATE_TRAVEL, getAdapterPosition());
+                    onSubItemClick.OnSubItemClick(getAdapterPosition(),CATE_TRAVEL);
                     break;
                 case R.id.constraintLayout_cate_6:
-                    onSubItemClick.OnSubItemClick(CATE_UTILS, getAdapterPosition());
+                    onSubItemClick.OnSubItemClick(getAdapterPosition(), CATE_UTILS);
+                    break;
+                case R.id.textView_make_private:
+                    onSubItemClick.OnSubItemClick(getAdapterPosition(), CATE_PRIVATE);
                     break;
             }
         }

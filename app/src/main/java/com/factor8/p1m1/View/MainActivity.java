@@ -41,6 +41,7 @@ import com.factor8.p1m1.UtilitiesClasses.Utils;
 import com.factor8.p1m1.ViewModel.ViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -73,10 +74,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Double sum = (double) 0;
     private ViewModel viewModel;
     private boolean shouldUpdate = false;
-
+    private volatile double sumOfCth = 0;
     private BottomNavigationView bottomNavigationView;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+    List<EntitySavings> entitySavingsG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         checkForPermissions();
         registerReceiverBroadcastReceiver();
       //  checkLogin();
+
+        viewModel.getAllSavings().observe(this, new Observer<List<EntitySavings>>() {
+            @Override
+            public void onChanged(List<EntitySavings> entitySavings) {
+                entitySavingsG = entitySavings;
+                // Log.d(TAG, "onChanged: inside ViewModel Observer");
+            }
+        });
+
+        viewModel.getSumCth().observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                Log.d(TAG, "sumOfCth- Observer"+ aDouble);
+                if(aDouble!=null){
+                    updateSumCth(aDouble);
+//                    if(entitySavingsG!=null){
+//                        savingsEntry();
+//                    }
+
+                }
+                Log.d(TAG, "sumOfCth- Global AVriable"+ sumOfCth);
+            }
+        });
+
+
+    }
+    void updateSumCth(double sum){
+        this.sumOfCth = sum;
     }
 
     private void checkLogin() {
@@ -139,7 +170,30 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         temp.add("AX-KOTAKB");
         temp.add("9654829994");
         temp.add("9910247478");
-        temp.add("7827041909");
+        temp.add("9620921237");
+        temp.add("ICICIM");
+        temp.add("ICICIB");
+        temp.add("ANDBNK");
+        temp.add("SBIUPI");
+        temp.add("SBIPSG");
+        temp.add("CBSSBI");
+        temp.add("KOTAKB");
+        temp.add("DBSBNK");
+        temp.add("SBIINB");
+        temp.add("SBIDGT");
+        temp.add("ATMSBI");
+        temp.add("AXISBK");
+        temp.add("BOBTXN");
+        temp.add("OBCBNK");
+        temp.add("SYNBNK");
+        temp.add("INDUSB");
+        temp.add("ALBNK");
+        temp.add("UNIONB");
+        temp.add("IDBIK");
+        temp.add("HDFCBK");
+        temp.add("PNBSMS");
+        //  temp.add("9910247478");
+        //   temp.add("7827041909");
         mBankSender = temp;
     }
 
@@ -182,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             String action = intent.getAction();
             if (action.equals("android.provider.Telephony.SMS_RECEIVED")) {
                 Bundle bundle = intent.getExtras();
-                Log.d(TAG, "onReceive: Receiver Called --------------- " );
+              //  Log.d(TAG, "onReceive: Receiver Called --------------- " );
                 if (bundle != null) {
                     Object[] pdus = (Object[]) bundle.get("pdus");
                     if (pdus.length == 0) {
@@ -218,20 +272,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< BroadCast Receiver >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Network Call <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     public void networkCall() {
-        VolleyMultipartRequest request = new VolleyMultipartRequest(Request.Method.POST, "https://dass.io/kwkPay/api/endpoint.php", new Response.Listener<NetworkResponse>() {
+        VolleyMultipartRequest request = new VolleyMultipartRequest(Request.Method.POST, "http://dass.io/kwkpay/inward.php", new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 String responseString = new String(response.data);
                 try {
-                    JSONObject obj = new JSONObject(responseString);
-                    Log.d(TAG, "onResponse: JSONObject resqest_successful" + obj.getString("request_successful"));
-                    Log.d(TAG, "onResponse: JSONObject error" + obj.getString("error"));
-                    Log.d(TAG, "onResponse: JSONObject message" + obj.getString("message"));
-                    Log.d(TAG, "onResponse: JSONObject amount" + obj.getString("amount"));
-                    Log.d(TAG, "onResponse: JSONObject account" + obj.getString("acc_no"));
-                    accountNumber = obj.getString("acc_no");
-                    if(obj.getString("request_successful").equals("1")){
-                        makeDatabaseEntry(obj.getString("amount"));
+                    JSONArray arr = new JSONArray(responseString);
+                    JSONObject obj =  arr.getJSONObject(0);
+                    //Log.d(TAG, "onResponse: JSONObject resqest_successful" + obj.getString("request_successful"));
+                    Log.d(TAG, "onResponse: JSONObject accountNumber " + obj.getString("accountNumber"));
+                    Log.d(TAG, "onResponse: JSONObject typeOfTransaction" + obj.getString("typeOfTransaction"));
+                    Log.d(TAG, "onResponse: JSONObject transactionAmount" + obj.getString("transactionAmount"));
+                   // Log.d(TAG, "onResponse: JSONObject account" + obj.getString("acc_no"));
+                    accountNumber = obj.getString("accountNumber");
+                    if(!obj.getString("typeOfTransaction") .equals("credited")){
+                        makeDatabaseEntry(obj.getString("transactionAmount"));
                     }
                 } catch (Exception e) {
                     Log.d(TAG, "onResponse EXCEPTION: " + e.getMessage());
@@ -246,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("method", "filterSMS");
+              //  map.put("method", "filterSMS");
                 map.put("data", mMessageBody);
                 return map;
             }
@@ -269,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             if(sharedPreferences.getBoolean(PREF_KEY_IS_SERVICE_RUNNING,false)){
                 startService();
             }
-            Log.d(TAG, "onStop: Starting Service");
+        //    Log.d(TAG, "onStop: Starting Service");
         } catch (Exception e) {
             Log.d(TAG, "onPause: " + e);
         }
@@ -283,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             if(sharedPreferences.getBoolean(PREF_KEY_IS_SERVICE_RUNNING,false)) {
                 stopService();
             }
-            Log.d(TAG, "onStart: Stopping Service");
+       //     Log.d(TAG, "onStart: Stopping Service");
         } catch (Exception e) {
             Log.d(TAG, "onStart: " + e);
         }
@@ -298,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return isThere;
             }
         }
-        Log.d(TAG, "senderCheck: " + isThere);
+     //   Log.d(TAG, "senderCheck: " + isThere);
         return isThere;
     }
 
@@ -315,16 +370,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
              }else{
                  local_account_number = accountNumber;
              }
-        viewModel.insert(new Entity(mSender, Double.parseDouble(localAmount), Entity.CATE_UNCATEGORISED, local_account_number, mTimeStamp, mMessageBody));
+        viewModel.insert(new Entity(mSender, Double.parseDouble(localAmount.replaceAll(",", "")), Entity.CATE_UNCATEGORISED, local_account_number, mTimeStamp, mMessageBody));
         viewModel.getAllEnteries().observe(this, new Observer<List<Entity>>() {
             @Override
             public void onChanged(List<Entity> entityList) {
                 mDataList = entityList;
             }
         });
+        Log.d(TAG, "Entity List: ----------------------------Start--------------------------------->>>>>>>>>>>>>>>>>");
         for (Entity temp : mDataList) {
-            Log.d(TAG, "makeDatabaseEntry: " + temp.getSender() + " - " + temp.getAmount() + " - Cate: " + temp.getCategory()+ "CTH: "+ temp.getCth());
+            Log.d(TAG, "makeDatabaseEntry: " + temp.getSender() + " - " + temp.getAmount()
+                    + " - Cate: " + temp.getCategory()+ "CTH: "+ temp.getCth()+ "AMOUNT: "+ temp.getAmount());
         }
+        Log.d(TAG, "Entity List: ----------------------------Stop--------------------------------->>>>>>>>>>>>>>>>>");
         shouldUpdate = true;
         savingsEntry();
     }
@@ -421,54 +479,49 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void savingsEntry() {
-        viewModel.getSum().observe(this, new Observer<Double>() {
-            @Override
-            public void onChanged(Double aDouble) {
-                sum = aDouble;
-                Log.d(TAG, "Sum: " + sum);
-            }
-        });
-
-
         final String formattedDate = Utils.getTodaysDate00(0);
-        Log.d(TAG, "savingsEntry: " + formattedDate);
-
-        Log.d(TAG, "savingsEntry: time Stamp" + convertDateToTimeStamp(formattedDate, "dd-MM-yyyy"));
-
         final String formattedDateT = Utils.getTodaysDate00(1);
-        Log.d(TAG, "savingsEntry: " + formattedDateT);
-
-        viewModel.getAllSavings().observe(this, new Observer<List<EntitySavings>>() {
-            @Override
-            public void onChanged(List<EntitySavings> entitySavings) {
-                Log.d(TAG, "onChanged: inside ViewMOdel Observer");
-                if (entitySavings.size() == 0) {
-                    Log.d(TAG, "onChanged: Saving Entry null,  Creating New Entry");
-                    //No Entry for today's saving exist, Create a New Entry
-                  //  viewModel.insertSavingEntry(new EntitySavings(System.currentTimeMillis(), 250, calculateNearestHundred(sum), 0, sum));
-                } else {
-                    for (EntitySavings thisSaving : entitySavings) {
-                        //Entry Exist, Just update the current Entry
-                        if ((thisSaving.getTimeStamp() >= convertDateToTimeStamp(formattedDate, "dd-MM-yyyy"))
-                                && (thisSaving.getTimeStamp() < convertDateToTimeStamp(formattedDateT, "dd-MM-yyyy")) && shouldUpdate) {
-                            Log.d(TAG, "onChanged: Saving Entry not null,  Updating Entry");
-                            EntitySavings currentObject = thisSaving;
-                            currentObject.setTimeStamp(System.currentTimeMillis());
-                            currentObject.setCth(calculateNearestHundred(sum));
-                            currentObject.setTotalExpense(sum);
-                            currentObject.setDeduction(Math.min(250, (calculateNearestHundred(sum) - sum)));
-                            viewModel.updateEntitySavings(currentObject);
-                        }
-                        Log.d(TAG, "SavingEntries :  " + thisSaving.getId());
-                        Log.d(TAG, "SavingEntries :  " + thisSaving.getTimeStamp());
-                        Log.d(TAG, "SavingEntries :  CTH: " + thisSaving.getCth());
-                        Log.d(TAG, "SavingEntries :  Expenses: " + thisSaving.getTotalExpense());
-                        Log.d(TAG, "SavingEntries :  Deduction: " + thisSaving.getDeduction());
-                    }
-                    shouldUpdate = false;
+        if (entitySavingsG.size() == 0) {
+            Log.d(TAG, "Saving Entry null,  Creating New Entry");
+            //No Entry for today's saving exist, Create a New Entry
+            Log.d(TAG, "Inserting SumofCTH: ----"+ sumOfCth);
+            viewModel.insertSavingEntry(new EntitySavings(System.currentTimeMillis(), 250, 0, sumOfCth, sumOfCth));
+            viewModel.getAllSavings().observe(this, new Observer<List<EntitySavings>>() {
+                @Override
+                public void onChanged(List<EntitySavings> entitySavings) {
+                           if(entitySavings.size()!=0){
+                               for(EntitySavings temp : entitySavings){
+                                   Log.d(TAG, "New Savings Entry : --------------");
+                                   Log.d(TAG, "Deduction: "+temp.getDeduction());
+                                   Log.d(TAG, "Total Amount "+temp.getTotalExpense());
+                               }
+                           }
                 }
+            });
+        } else {
+            Log.d(TAG, "Entity Saving List: ----------------------------Start--------------------------------->>>>>>>>>>>>>>>>>");
+            for (EntitySavings thisSaving : entitySavingsG) {
+                //Entry Exist, Just update the current Entry
+                if ((thisSaving.getTimeStamp() >= convertDateToTimeStamp(formattedDate, "dd-MM-yyyy"))
+                        && (thisSaving.getTimeStamp() < convertDateToTimeStamp(formattedDateT, "dd-MM-yyyy")) && shouldUpdate) {
+                    Log.d(TAG, "Saving Entry not null,  Updating Entry");
+                    Log.d(TAG, "Inserting SumofCTH: ----"+ sumOfCth);
+                    EntitySavings currentObject = thisSaving;
+                    thisSaving.setTimeStamp(System.currentTimeMillis());
+                    thisSaving.setCth(0);
+                    thisSaving.setTotalExpense(sumOfCth);
+                    thisSaving.setDeduction(Math.min(250, sumOfCth));
+                    viewModel.updateEntitySavings(thisSaving);
+                }
+                Log.d(TAG, "SavingEntries :  " + thisSaving.getId());
+                Log.d(TAG, "SavingEntries :  " + thisSaving.getTimeStamp());
+                Log.d(TAG, "SavingEntries :  CTH: NULL " + thisSaving.getCth());
+                Log.d(TAG, "SavingEntries :  Expenses: Sum of All Induced Savings " + thisSaving.getTotalExpense());
+                Log.d(TAG, "SavingEntries :  Deduction: min( daily limit, Expense) " + thisSaving.getDeduction());
             }
-        });
+            Log.d(TAG, "Entity Saving List: ----------------------------Stop--------------------------------->>>>>>>>>>>>>>>>>");
+            shouldUpdate = false;
+        }
     }
 
     private int calculateNearestHundred(double number) {
@@ -486,7 +539,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         long output = date.getTime() / 1000L;
         String str = Long.toString(output);
         long timestamp = Long.parseLong(str) * 1000;
-        Log.d(TAG, "convertDateToTimeStamp: time Stamp: " + timestamp);
+      //  Log.d(TAG, "convertDateToTimeStamp: time Stamp: " + timestamp);
         return timestamp;
     }
 }

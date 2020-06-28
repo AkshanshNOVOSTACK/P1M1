@@ -21,6 +21,7 @@ import com.factor8.p1m1.R;
 import com.factor8.p1m1.ViewModel.ViewModel;
 import com.factor8.p1m1.databinding.FragmentToolsBinding;
 
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +37,7 @@ public class ToolsFragment extends Fragment implements ListFragmentAdapter.onLis
     private ListFragmentAdapter mAdapter;
     private static final String TAG = "ToolsFragment";
     private List<Entity> mLocalDataList = new ArrayList<>();
-    private double closeToHunderedSum = 0;
+
     public ToolsFragment() {
 
     }
@@ -52,9 +53,6 @@ public class ToolsFragment extends Fragment implements ListFragmentAdapter.onLis
             public void onChanged(List<Entity> entityList) {
                 mLocalDataList = entityList;
                 mAdapter.setDataList(entityList);
-                       for (Entity temo : entityList){
-                           Log.d(TAG, "CTH -------> "+ temo.getCth());
-                       }
             }
         });
         viewModel.getSum().observe(this, new Observer<Double>() {
@@ -62,50 +60,55 @@ public class ToolsFragment extends Fragment implements ListFragmentAdapter.onLis
             public void onChanged(Double aDouble) {
                 if (aDouble != null) {
                     binding.textViewAmountTotal.setText("₹" + aDouble);
+                }else{
+                    binding.textViewAmountTotal.setText("₹ 0");
                 }
             }
         });
      viewModel.getSumCth().observe(this, new Observer<Double>() {
          @Override
          public void onChanged(Double aDouble) {
-             binding.textViewCthTotal.setText("₹" + aDouble);
+             if(aDouble != null){
+                 binding.textViewCthTotal.setText("₹" + aDouble);
+             }else{
+                 binding.textViewCthTotal.setText("₹ 0");
+             }
          }
      });
-        Calendar calender = Calendar.getInstance();
-        Date today = calender.getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        final String formattedDate = df.format(today);
 
+     viewModel.getDeductionSum().observe(this, new Observer<Double>() {
+         @Override
+         public void onChanged(Double aDouble) {
+             if(aDouble!=null){
+                 binding.textViewTotalSaving.setText("₹"+ aDouble);
+             }else{
+                 binding.textViewTotalSaving.setText("₹ 0" );
+             }
+         }
+     });
 
-        calender.add(Calendar.DAY_OF_YEAR, 1);
-        Date tomorrow = calender.getTime();
-        final String formattedDateT = df.format(tomorrow);
-        viewModel.getAllSavings().observe(this, new Observer<List<EntitySavings>>() {
-            @Override
-            public void onChanged(List<EntitySavings> entitySavings) {
-                if (entitySavings != null) {
-                    for (EntitySavings saving : entitySavings) {
-                        Log.d(TAG, "onChanged: "+saving.getId());
-                        Log.d(TAG, "onChanged: "+ saving.getTimeStamp());
-                        Log.d(TAG, "onChanged: "+ saving.getDeduction());
-                        Log.d(TAG, "onChanged: "+saving.getTotalExpense());
-                        if (saving.getTimeStamp() >= convertDateToTimeStamp(formattedDate, "dd-MM-yyyy")
-                                && saving.getTimeStamp() < convertDateToTimeStamp(formattedDateT, "dd-MM-yyyy")) {
-                            Log.d(TAG, "onChanged: Sum " + saving.getDeduction());
-                            saving.setDeduction(Math.min(250, closeToHunderedSum));
-                            binding.textViewTotalSaving.setText(""+ saving.getDeduction());
-                        }
-                    }
-                }
-            }
-        });
-
-         viewModel.getGetAllCth().observe(this, new Observer<List<Double>>() {
+        viewModel.getGetAllCth().observe(this, new Observer<List<Double>>() {
              @Override
              public void onChanged(List<Double> doubles) {
                  if(doubles.size()!=0){
                      mAdapter.setmDataListCTH(doubles);
                  }
+             }
+         });
+         viewModel.getAllSavings().observe(this, new Observer<List<EntitySavings>>() {
+             @Override
+             public void onChanged(List<EntitySavings> entitySavings) {
+                             if(entitySavings.size()==0){
+                                 Log.d(TAG, "Savings List is empty");
+                             }else{
+                                 Log.d(TAG, "---------------------------Tools All Savings Entries -----------------------");
+                                  for(EntitySavings temp : entitySavings){
+                                      Log.d(TAG, "ID : "+ temp.getId());
+                                      Log.d(TAG, "timeStamp : "+ temp.getTimeStamp());
+                                      Log.d(TAG, "Deduction: "+ temp.getDeduction());
+                                      Log.d(TAG, "TotalExpense: "+ temp.getTotalExpense());
+                                  }
+                             }
              }
          });
 
@@ -118,37 +121,6 @@ public class ToolsFragment extends Fragment implements ListFragmentAdapter.onLis
     @Override
     public void onResume() {
         super.onResume();
-        Calendar calender = Calendar.getInstance();
-        Date today = calender.getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        final String formattedDate = df.format(today);
-
-
-        calender.add(Calendar.DAY_OF_YEAR, 1);
-        Date tomorrow = calender.getTime();
-        final String formattedDateT = df.format(tomorrow);
-
-        viewModel.getAllSavings().observe(this, new Observer<List<EntitySavings>>() {
-            @Override
-            public void onChanged(List<EntitySavings> entitySavings) {
-                if (entitySavings != null) {
-                    for (EntitySavings saving : entitySavings) {
-                        Log.d(TAG, "onChanged: "+saving.getId());
-                        Log.d(TAG, "onChanged: "+ saving.getTimeStamp());
-                        Log.d(TAG, "onChanged: "+ saving.getDeduction());
-                        Log.d(TAG, "onChanged: "+saving.getTotalExpense());
-                        if (saving.getTimeStamp() >= convertDateToTimeStamp(formattedDate, "dd-MM-yyyy")
-                                && saving.getTimeStamp() < convertDateToTimeStamp(formattedDateT, "dd-MM-yyyy")) {
-                            Log.d(TAG, "onChanged: Sum " + saving.getDeduction());
-                            saving.setDeduction(Math.min(250, closeToHunderedSum));
-
-
-                        }
-                    }
-                }
-            }
-        });
-
     }
 
     public void initRecyclerView() {
@@ -161,24 +133,5 @@ public class ToolsFragment extends Fragment implements ListFragmentAdapter.onLis
     public void sendInput(Entity obj) {
         Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
     }
-
-
-
-
-    private long convertDateToTimeStamp(String dateString, String format) {
-        DateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-        Date date = null;
-        try {
-            date = (Date) formatter.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long output = date.getTime() / 1000L;
-        String str = Long.toString(output);
-        long timestamp = Long.parseLong(str) * 1000;
-        return timestamp;
-    }
-
-
 
 }

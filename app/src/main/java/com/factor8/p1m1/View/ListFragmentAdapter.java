@@ -20,6 +20,7 @@ import static com.factor8.p1m1.Model.Entity.CATE_ENTERTAINMENT;
 import static com.factor8.p1m1.Model.Entity.CATE_GROCERY;
 import static com.factor8.p1m1.Model.Entity.CATE_INSTALLMENTS;
 import static com.factor8.p1m1.Model.Entity.CATE_MEDICAL;
+import static com.factor8.p1m1.Model.Entity.CATE_PRIVATE;
 import static com.factor8.p1m1.Model.Entity.CATE_TRAVEL;
 import static com.factor8.p1m1.Model.Entity.CATE_UNCATEGORISED;
 import static com.factor8.p1m1.Model.Entity.CATE_UTILS;
@@ -32,6 +33,7 @@ public class ListFragmentAdapter extends RecyclerView.Adapter<ListFragmentAdapte
     public static final String CATEGORY_UTILS = "UTILS";
     public static final String CATEGORY_MEDICAL = "Medical";
     public static final String CATEGORY_UNKNOWN = "Unknown";
+    public static final String CATEGORY_PRIVATE = "Private";
     private List<Entity> mDataList = new ArrayList<>();
     private List<Double> mCTHList = new ArrayList<>();
     private static final String TAG = "ListFragmentAdapter";
@@ -104,6 +106,10 @@ public class ListFragmentAdapter extends RecyclerView.Adapter<ListFragmentAdapte
             case CATE_UNCATEGORISED:
                 holder.mCategoryImageView.setImageResource(R.drawable.ic_category_unknown);
                 holder.mCategoryName.setText(CATEGORY_UNKNOWN);
+                break;
+            case CATE_PRIVATE:
+                holder.mCategoryImageView.setImageResource(R.drawable.ic_category_private);
+                holder.mCategoryName.setText(CATEGORY_PRIVATE);
                 break;
         }
     }

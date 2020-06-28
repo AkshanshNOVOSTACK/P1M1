@@ -40,45 +40,45 @@
             android:text="₹"
             android:textSize="26sp" />
 
-        <TextView
-            android:id="@+id/textView_price_l"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_login_input"
-            android:fontFamily="@font/gilroy_semibold"
-            android:padding="8dp"
-            android:text="1"
-            android:textSize="24sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView_price_l"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/shape_login_input"-->
+<!--            android:fontFamily="@font/gilroy_semibold"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="1"-->
+<!--            android:textSize="24sp" />-->
 
-        <TextView
-            android:id="@+id/textView_price_comma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/gilroy_semibold"
-            android:gravity="bottom"
-            android:padding="8dp"
-            android:text=","
-            android:textSize="24sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView_price_comma"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/gilroy_semibold"-->
+<!--            android:gravity="bottom"-->
+<!--            android:padding="8dp"-->
+<!--            android:text=","-->
+<!--            android:textSize="24sp" />-->
 
-        <TextView
-            android:id="@+id/textView_price_k"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_login_input"
-            android:fontFamily="@font/gilroy_semibold"
-            android:padding="8dp"
-            android:text="10"
-            android:textSize="24sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView_price_k"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/shape_login_input"-->
+<!--            android:fontFamily="@font/gilroy_semibold"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="10"-->
+<!--            android:textSize="24sp" />-->
 
-        <TextView
-            android:id="@+id/textView_price_comma2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/gilroy_semibold"
-            android:gravity="bottom"
-            android:padding="8dp"
-            android:text=","
-            android:textSize="24sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView_price_comma2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/gilroy_semibold"-->
+<!--            android:gravity="bottom"-->
+<!--            android:padding="8dp"-->
+<!--            android:text=","-->
+<!--            android:textSize="24sp" />-->
 
         <TextView
             android:id="@+id/textView_price_h"
@@ -87,7 +87,7 @@
             android:background="@drawable/shape_login_input"
             android:fontFamily="@font/gilroy_semibold"
             android:padding="8dp"
-            android:text="999"
+            android:text="0"
             android:textSize="24sp" />
     </LinearLayout>
 
@@ -95,6 +95,7 @@
         android:id="@+id/textView_l_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/gilroy_bold"
@@ -106,6 +107,7 @@
         android:id="@+id/linearLayout_l_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
@@ -118,11 +120,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="₹0"
+            android:visibility="gone"
             android:textAlignment="center"
             android:textSize="14sp" />
 
         <SeekBar
             android:id="@+id/seekbar_l"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="8" />
@@ -131,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:visibility="gone"
             android:text="₹10"
             android:textAlignment="center"
             android:textSize="14sp" />
@@ -142,6 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/gilroy_bold"
+        android:visibility="gone"
         android:text="K"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -150,6 +156,7 @@
     <LinearLayout
         android:id="@+id/linearLayout_k_slider"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -188,6 +195,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/gilroy_bold"
+        android:visibility="gone"
         android:text="H"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout_k_slider" />
@@ -196,6 +204,7 @@
         android:id="@+id/linearLayout_h_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
@@ -221,7 +230,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="₹999"
+            android:text="₹2,00,000"
             android:textAlignment="center"
             android:textSize="14sp" />
     </LinearLayout>

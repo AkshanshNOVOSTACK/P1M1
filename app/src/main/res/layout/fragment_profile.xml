@@ -327,19 +327,19 @@
             android:visibility="gone"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout_appBar"/>
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout_userData"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout_userData"/>
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout_userData"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout_appBar"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout_userData"
             app:shimmer_duration="1000">
 
             <LinearLayout
@@ -347,12 +347,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <include layout="@layout/placeholder_profile_layout" />
-                <include layout="@layout/placeholder_profile_layout" />
-                <include layout="@layout/placeholder_profile_layout" />
-                <include layout="@layout/placeholder_profile_layout" />
-                <include layout="@layout/placeholder_profile_layout" />
-                <include layout="@layout/placeholder_profile_layout" />
-                <include layout="@layout/placeholder_profile_layout" />
+
             </LinearLayout>
             <include layout="@layout/placeholder_profile_layout" />
         </com.facebook.shimmer.ShimmerFrameLayout>

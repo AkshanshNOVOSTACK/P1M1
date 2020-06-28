@@ -21,14 +21,14 @@ public interface MyDao {
     @Query("SELECT * FROM Entity")
     List<Entity> getUserList();
 
-    @Query("select SUM(cth) from Entity")
+    @Query("select SUM(cth) from Entity where category != 7")
     LiveData<Double> getSumCth();
 
-    @Query("select SUM(amount) from Entity")
+    @Query("select SUM(amount) from Entity where category != 7")
     LiveData<Double> getSumL();
 
 
-     @Query("select * from Entity order by timestamp DESC")
+     @Query("select * from Entity  order by timestamp DESC")
     LiveData<List<Entity>>  getUserListLiveData();
 
      @Query("select * from Entity where category = 69 order by timestamp DESC")

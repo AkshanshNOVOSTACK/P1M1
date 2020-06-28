@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.factor8.p1m1.R;
+import com.factor8.p1m1.UtilitiesClasses.Utils;
 
 public class PriceRangeFragment extends DialogFragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
@@ -34,8 +35,8 @@ public class PriceRangeFragment extends DialogFragment implements SeekBar.OnSeek
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_price_range, container, false);
 
-        mLakhs = view.findViewById(R.id.textView_price_l);
-        mThousands = view.findViewById(R.id.textView_price_k);
+//        mLakhs = view.findViewById(R.id.textView_price_l);
+//        mThousands = view.findViewById(R.id.textView_price_k);
         mHundreds = view.findViewById(R.id.textView_price_h);
 
         mCancel = view.findViewById(R.id.button_cancel);
@@ -45,7 +46,9 @@ public class PriceRangeFragment extends DialogFragment implements SeekBar.OnSeek
 
         mLSeekBar = view.findViewById(R.id.seekbar_l); mLSeekBar.setMax(9);mLSeekBar.incrementProgressBy(1);
         mTSeekBar = view.findViewById(R.id.seekbar_k);mTSeekBar.setMax(99);mTSeekBar.incrementProgressBy(3);
-        mHSeekBar = view.findViewById(R.id.seekbar_h);mHSeekBar.setMax(999);mHSeekBar.incrementProgressBy(30);
+        mHSeekBar = view.findViewById(R.id.seekbar_h);
+        mHSeekBar.setMax(200000);
+        mHSeekBar.incrementProgressBy(10000);
 
         mLSeekBar.setOnSeekBarChangeListener(this);
         mTSeekBar.setOnSeekBarChangeListener(this);
@@ -80,7 +83,7 @@ public class PriceRangeFragment extends DialogFragment implements SeekBar.OnSeek
                     hund = "00"+hund;
                 }
 
-                mHundreds.setText(""+hund);
+                mHundreds.setText(""+ Utils.currencyFormatter(Double.valueOf(hund)));
                 mHundredString = hund;
                 break;
         }

@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.factor8.p1m1.Model.EntityGoals;
 import com.factor8.p1m1.R;
+import com.factor8.p1m1.UtilitiesClasses.Utils;
 import com.factor8.p1m1.ViewModel.ViewModel;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class AutomobileActivity extends AppCompatActivity implements AdapterView
     private String[] autoCompanies = {"Bajaj Auto","Hero MotoCorp","Honda Motorcycle","Kawasaki Motors","KTM Industries","Mahindra Two Wheelers","Piaggio Vehicles",
                                                            "Suzuki Motorcycle","Royal Enfield","TVS Motor Company","UM Motorcycles","Yamaha Motor"};
 
-    private String timePeriods[] = {"1-2 months", "2-4 months", "4-6 months", "6-9 months", "More than 9 months", "Not sure"};
+    private String timePeriods[] = {"1-2 months", "2-4 months", "4-6 months", "6-9 months","9-12 months",  "More than a year"};
     private String savingPercentages[] = {"Less than 20%", "35%", "50%", "More than 50%"};
 
     List<EntityGoals>list = new ArrayList<>();
@@ -116,8 +117,11 @@ public class AutomobileActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void sendInput(String l, String k, String h) {
-        mPriceRange.setText("₹ " + l +"," + k +"," + h);
-        currentPrice = l+k+h;
+        //mPriceRange.setText("₹ " + l +"," + k +"," + h);
+        mPriceRange.setText("₹ " +Utils.currencyFormatter(Double.parseDouble(h)));
+        currentPrice = h;
+       // currentPrice = l+k+h;
+
     }
 
     private void makeDataBaseEntery() {

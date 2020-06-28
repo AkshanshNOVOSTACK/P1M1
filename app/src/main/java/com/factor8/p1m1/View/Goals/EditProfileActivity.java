@@ -162,6 +162,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        Log.d(TAG, "getFileDataFromDrawable: image: " + byteArrayOutputStream.toByteArray());
         return byteArrayOutputStream.toByteArray();
 
     }

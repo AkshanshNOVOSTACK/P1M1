@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 
 import com.factor8.p1m1.BackgroundService;
 import com.factor8.p1m1.R;
+
 import com.factor8.p1m1.databinding.ActivityBackgroundProcessesBinding;
 import com.google.gson.internal.$Gson$Preconditions;
 

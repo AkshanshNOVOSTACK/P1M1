@@ -43,10 +43,23 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout_progress"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout_appBar">
+
+            <TextView
+                android:id="@+id/textView_yourProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginTop="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Your Progress: "
+                android:fontFamily="@font/gilroy_bold"
+                android:textColor="@color/colorBlack"/>
 
             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                 android:id="@+id/progressBar_main"
@@ -56,46 +69,77 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_yourProgress"
                 app:rcBackgroundColor="@color/colorWhite"
-                app:rcReverse="true" />
-
-            <TextView
-                android:id="@+id/textView_savings"
+                app:rcProgressColor="@color/colorAccent"
+                app:rcSecondaryProgressColor="#5917A7"
+                app:rcBackgroundPadding = "4dp"
+                app:rcReverse="false" />
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroy_medium"
-                android:textSize="10sp"
+                android:weightSum="300"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@+id/progressBar_main"
-                app:layout_constraintTop_toBottomOf="@+id/progressBar_main" />
+                app:layout_constraintTop_toBottomOf="@+id/progressBar_main"
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/textView_plus"
+                <TextView
+                    android:id="@+id/textView_savings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gilroy_medium"
+                    android:layout_marginTop="4dp"
+                    android:text=" Total Savings ₹0"
+                    android:textSize="10sp"
+                    />
+
+                <TextView
+                    android:id="@+id/textView_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="12sp"
+                    />
+
+                <TextView
+                    android:id="@+id/textView_inducedSavings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Induced Savings ₹ 0"
+                    android:fontFamily="@font/gilroy_medium"
+                    android:textSize="10sp"
+                    />
+            </LinearLayout>
+
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
-                android:textColor="@color/colorBlack"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/textView_savings"
-                app:layout_constraintTop_toBottomOf="@+id/textView_savings" />
-
-            <TextView
-                android:id="@+id/textView_inducedSavings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroy_medium"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/textView_plus"
-                app:layout_constraintTop_toBottomOf="@+id/textView_plus" />
-
-            <TextView
-                android:id="@+id/textView_goalSavings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroy_medium"
-                android:textSize="10sp"
+                android:orientation="vertical"
+                android:layout_marginTop="4dp"
+                android:gravity="start"
                 app:layout_constraintEnd_toEndOf="@+id/progressBar_main"
-                app:layout_constraintTop_toBottomOf="@+id/progressBar_main" />
+                app:layout_constraintTop_toBottomOf="@+id/progressBar_main"
+                android:weightSum="100">
+                <TextView
+                    android:id="@+id/textView_goalSavings_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Target Savings"
+                    android:fontFamily="@font/gilroy_medium"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/textView_goalSavings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/gilroy_semibold"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

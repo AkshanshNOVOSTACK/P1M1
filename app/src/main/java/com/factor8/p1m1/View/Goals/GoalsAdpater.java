@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.factor8.p1m1.Model.EntityGoals;
 import com.factor8.p1m1.R;
+import com.factor8.p1m1.UtilitiesClasses.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class GoalsAdpater extends RecyclerView.Adapter<GoalsAdpater.GoalsViewHol
                 String dateString = formatter.format(new Date(goal.getGoalCreatedDate()));
                 holder.mDate.setText("created on:"+ dateString);
                 holder.mStartingPrice.setText("₹ 0");
-                holder.mEndingPrice.setText("₹ "+goal.getPrice());
+                holder.mEndingPrice.setText("₹ "+ Utils.currencyFormatter(Double.parseDouble(goal.getPrice())));
                 holder.animationView.setAnimation(R.raw.progress_yellow);
             }break;
             case CATEGORY_TRAVEL: {
@@ -56,7 +57,7 @@ public class GoalsAdpater extends RecyclerView.Adapter<GoalsAdpater.GoalsViewHol
                 String dateString = formatter.format(new Date(goal.getGoalCreatedDate()));
                 holder.mDate.setText("created on:"+ dateString);
                 holder.mStartingPrice.setText("₹ 0");
-                holder.mEndingPrice.setText("₹ "+goal.getPrice());
+                holder.mEndingPrice.setText("₹ "+Utils.currencyFormatter(Double.parseDouble(goal.getPrice())));
                 holder.animationView.setAnimation(R.raw.progress_blue);
             }break;
             case CATEGORY_AUTO: {
@@ -66,7 +67,7 @@ public class GoalsAdpater extends RecyclerView.Adapter<GoalsAdpater.GoalsViewHol
                 String dateString = formatter.format(new Date(goal.getGoalCreatedDate()));
                 holder.mDate.setText("created on:"+ dateString);
                 holder.mStartingPrice.setText("₹ 0");
-                holder.mEndingPrice.setText("₹ "+goal.getPrice());
+                holder.mEndingPrice.setText("₹ "+Utils.currencyFormatter(Double.parseDouble(goal.getPrice())));
                 holder.animationView.setAnimation(R.raw.progress_red);
             }break;
             case CATEGORY_FESTIVAL: {
@@ -76,7 +77,7 @@ public class GoalsAdpater extends RecyclerView.Adapter<GoalsAdpater.GoalsViewHol
                 String dateString = formatter.format(new Date(goal.getGoalCreatedDate()));
                 holder.mDate.setText("created on:"+ dateString);
                 holder.mStartingPrice.setText("₹ 0");
-                holder.mEndingPrice.setText("₹ "+goal.getPrice());
+                holder.mEndingPrice.setText("₹ "+Utils.currencyFormatter(Double.parseDouble(goal.getPrice())));
                 holder.animationView.setAnimation(R.raw.progress_pink);
             }break;
         }

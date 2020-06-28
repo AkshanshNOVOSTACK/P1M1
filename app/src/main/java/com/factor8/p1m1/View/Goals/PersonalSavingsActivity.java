@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.factor8.p1m1.Model.EntityGoals;
 import com.factor8.p1m1.R;
+import com.factor8.p1m1.UtilitiesClasses.Utils;
 import com.factor8.p1m1.ViewModel.ViewModel;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
 public class PersonalSavingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PriceRangeFragment.OnInputListner {
 
     private String[] categories = {"Wedding", "Gift for a loved one", "Small house repair", "Student Fee","Just like that…..SPLURGE " };
-    private String timePeriods[] = {"1-2 months", "2-4 months", "4-6 months", "6-9 months", "More than 9 months", "Not sure"};
+    private String timePeriods[] = {"1-2 months", "2-4 months", "4-6 months", "6-9 months","9-12 months",  "More than a year"};
     private String savingPercentages[] = {"Less than 20%", "35%", "50%", "More than 50%"};
 
 
@@ -124,7 +125,9 @@ public class PersonalSavingsActivity extends AppCompatActivity implements Adapte
 
     @Override
     public void sendInput(String l, String k, String h) {
-        mPriceRange.setText("₹ " + l +"," + k +"," + h);
+//        mPriceRange.setText("₹ " + l +"," + k +"," + h);
+        mPriceRange.setText("₹ " +Utils.currencyFormatter(Double.parseDouble(h)));
+        currentPrice = h;
     }
 
     private void makeDataBaseEntery() {

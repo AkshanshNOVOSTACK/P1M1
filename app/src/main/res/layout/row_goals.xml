@@ -59,6 +59,7 @@
         <TextView
             android:id="@+id/textView_startGoal_price"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="₹3,300"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +96,7 @@
                 android:id="@+id/animationView_lottie"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
+                android:visibility="gone"
                 android:layout_weight="100"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"

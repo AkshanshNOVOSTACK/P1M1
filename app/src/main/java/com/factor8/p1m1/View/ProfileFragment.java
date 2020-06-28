@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.factor8.p1m1.LoginRegistration.Login2Activity.PREF_KEY_IS_LOGGED_IN;
@@ -41,12 +42,12 @@ import static com.factor8.p1m1.LoginRegistration.Login2Activity.PREF_KEY_USER_ID
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-     FragmentProfileBinding binding;
-     String dpURL;
-     public static final String PRE_URL = "http://dass.io/finance_app/storage/app/images/";
+     private FragmentProfileBinding binding;
+     private String dpURL;
+     private  static final String PRE_URL = "https://dass.io/finance_app/storage/app/images/";
 
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+    private SharedPreferences pref;
+    private  SharedPreferences.Editor editor;
 
     public ProfileFragment() {
     }
@@ -56,7 +57,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile, container, false);
         View view = binding.getRoot();
-        pref = this.getActivity().getSharedPreferences("LoginPreference", MODE_PRIVATE);
+        pref = Objects.requireNonNull(this.getActivity()).getSharedPreferences("LoginPreference", MODE_PRIVATE);
         binding.constraintLayoutSettingsBlockSafety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,12 +97,12 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 editor = pref.edit();
                 editor.clear();
-                editor.commit();
+                editor.apply();
                 Intent i = new Intent(getActivity(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-                getActivity().finish();
+                Objects.requireNonNull(getActivity()).finish();
             }
         });
 
@@ -138,16 +139,16 @@ public class ProfileFragment extends Fragment {
                     binding.textViewEmail.setText(details.getString("email"));
                     binding.textViewPhone.setText(details.getString("mobile"));
                     dpURL = details.getString("picture");
-                    Glide.with(getActivity()).load(PRE_URL+details.getString("picture")).into(binding.imageViewProfileImage);
+                    Glide.with(Objects.requireNonNull(getContext())).load(PRE_URL+details.getString("picture")).into(binding.imageViewProfileImage);
 
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), ""+e, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), ""+e, Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
                 binding.shimmerBackground.setVisibility(View.GONE);
                 binding.shimmerContainer.setVisibility(View.GONE);
                 binding.shimmerContainer.stopShimmer();

@@ -37,7 +37,8 @@ public class ViewModel extends AndroidViewModel {
         getAllCth = repository.getGetAllCth();
     }
 
-     public void insert(Entity entity){
+
+    public void insert(Entity entity){
          repository.insert(entity);
      }
 
