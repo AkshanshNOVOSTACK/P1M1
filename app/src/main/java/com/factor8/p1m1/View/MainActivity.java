@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< BroadCast Receiver >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Network Call <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     public void networkCall() {
-        VolleyMultipartRequest request = new VolleyMultipartRequest(Request.Method.POST, "http://dass.io/kwkpay/inward.php", new Response.Listener<NetworkResponse>() {
+        VolleyMultipartRequest request = new VolleyMultipartRequest(Request.Method.POST, "https://dass.io/kwkpay/inward.php", new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 String responseString = new String(response.data);

@@ -20,7 +20,7 @@ import static com.factor8.p1m1.LoginRegistration.Login2Activity.PREF_KEY_IS_SERV
 
 public class BackgroundProcessesActivity extends AppCompatActivity {
     ActivityBackgroundProcessesBinding binding;
-    private static final String TAG = "BackgroundProcessesActi";
+    private static final String TAG = "codeNameSer";
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 

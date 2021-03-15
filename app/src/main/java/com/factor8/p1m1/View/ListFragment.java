@@ -11,16 +11,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.factor8.p1m1.Model.Entity;
+import com.factor8.p1m1.Network.VolleyMultipartRequest;
+import com.factor8.p1m1.Network.VolleySingleton;
 import com.factor8.p1m1.R;
 import com.factor8.p1m1.ViewModel.ViewModel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.factor8.p1m1.Model.Entity.CATE_UNCATEGORISED;
 
@@ -34,9 +48,12 @@ public class ListFragment extends Fragment implements ListFragmentAdapter.onList
     private ListFragmentAdapter mAdapter;
 
     private TextView mTotal;
+    public static final String TAG ="ListFragmentTag";
 
     private ViewModel viewModel;
     private int dialogType;
+
+    private List<Entity> mDataList;
 
     public ListFragment() {
 
@@ -57,9 +74,7 @@ public class ListFragment extends Fragment implements ListFragmentAdapter.onList
             @Override
             public void onChanged(List<Entity> entityList) {
                 mAdapter.setDataList(entityList);
-                for(Entity temp: entityList){
-
-                }
+                mDataList = entityList;
             }
         });
         viewModel.getSum().observe(this, new Observer<Double>() {
@@ -71,6 +86,7 @@ public class ListFragment extends Fragment implements ListFragmentAdapter.onList
         });
 
         populateDialogs(dialogType, null);
+        callFakeApi(); // Fake API: Dummy WeScraper API -
         return view;
     }
 
@@ -113,5 +129,41 @@ public class ListFragment extends Fragment implements ListFragmentAdapter.onList
                 dialog.show(getActivity().getSupportFragmentManager(), "s");
             }break;
         }
+    }
+
+    private void callFakeApi(){
+        VolleyMultipartRequest request = new VolleyMultipartRequest(Request.Method.GET, "https://cb539bb4dd41.ngrok.io/api/htmlparser", new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                String responseString = new String(response.data);
+                try {
+                    //JSONArray arr = new JSONArray(responseString);
+                    JSONObject obj = new JSONObject(responseString);
+                    //JSONObject obj =  arr.getJSONObject(0);
+                    if(obj.getString("OrderPrice")!=null){
+                            Entity tempObj = new Entity("Zomato", Double.parseDouble(obj.getString("TotalAmount")),8
+                                    , "akshanshssj5@gmail.com", String.valueOf(System.currentTimeMillis()),
+                                    obj.getString("Order"));
+                        Log.d(TAG, "onResponse: "+ tempObj.toString());
+                        mDataList.add(tempObj);
+                        mAdapter.setDataList(mDataList);
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "onResponse EXCEPTION: " + e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error);
+            }
+        });
+
+        request.setShouldCache(false);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                5,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(getActivity()).addToRequestQueue(request);
     }
 }

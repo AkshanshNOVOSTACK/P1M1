@@ -22,6 +22,7 @@ public class Entity {
     public static final int CATE_MEDICAL = 6;
     public static final int CATE_UNCATEGORISED = 69;
     public static final int CATE_PRIVATE =7;
+    public static final int CATE_ZOMATO = 8;
     private static final String TAG = "Entity";
     @PrimaryKey(autoGenerate = true)
     private int id;

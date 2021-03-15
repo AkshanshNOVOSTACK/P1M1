@@ -108,5 +108,8 @@
     <string name="settings_settingsBlock_service">Background Tasks</string>
     <string name="settings_settingsBlock_service_desc">Control what the app can read in background</string>
     <string name="appbar_title_background_service">Background Tasks</string>
+    <string name="monthly_sale">Monthly Sale</string>
+    <string name="pending_credit">Pending Credit</string>
+    <string name="credited">Credited</string>
 
 </resources>

@@ -72,6 +72,8 @@ public class ExpenseDialogFragment extends DialogFragment {
                   break;
                 case 6: mImageView.setImageResource(R.drawable.ic_category_medical);
                    break;
+                case 8:mImageView.setImageResource(R.drawable.ic_zomao);
+                break;
             }
         }
 
